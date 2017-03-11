@@ -28,5 +28,10 @@ public class InputHandler : MonoBehaviour
         {
             _playerMotion.HorizontalMovementStopped();
         }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            _playerMotion.AttemptJump();
+        }
     }
 }
