@@ -117,7 +117,7 @@ ModelImporter:
     7400014: 'Jump '
     7400016: 'Deactivate '
     7400018: Victory
-    7400020: Left Punch
+    7400020: Secondary Punch
     7400022: Rocket Punch
     9500000: //RootNode
   materials:
@@ -662,7 +662,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Left Punch
+      name: Secondary Punch
       takeName: Left Punch
       firstFrame: 558
       lastFrame: 610

@@ -2,8 +2,8 @@
 
 public class PlayerMotion : CharacterMotion
 {
-    private enum JumpState { Grounded, PreJump, Jump }
-    private enum Attack { None, RightPunch, LeftPunch, RocketPunch, Mace }
+    public enum JumpState { Grounded, PreJump, Jump }
+    public enum Attack { None, NormalPunch, SecondaryPunch, RocketPunch, Mace }
 
     // The time, in seconds, between pressing the jump key and lifting off
     // This should match the amount of time the animation takes to lift off
@@ -19,6 +19,13 @@ public class PlayerMotion : CharacterMotion
     private float _jumpStart;
 
     private Attack _currentAttack;
+    public Attack CurrentAttack
+    {
+        get
+        {
+            return _currentAttack;
+        }
+    }
 
     private bool _blocking;
     
@@ -57,20 +64,20 @@ public class PlayerMotion : CharacterMotion
             if (_currentAttack == Attack.None)
             {
                 _haltMotion = true;
-                _currentAttack = Attack.RightPunch;
+                _currentAttack = Attack.NormalPunch;
             }
             else if (_currentAttack < Attack.RocketPunch)
             {
                 float currentAnimationCompletion = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 if (currentAnimationCompletion >= _earliestAttackFollowUp)
                 {
-                    if (_currentAttack == Attack.RightPunch)
+                    if (_currentAttack == Attack.NormalPunch)
                     {
-                        _currentAttack = Attack.LeftPunch;
+                        _currentAttack = Attack.SecondaryPunch;
                     }
-                    else if (_currentAttack == Attack.LeftPunch)
+                    else if (_currentAttack == Attack.SecondaryPunch)
                     {
-                        _currentAttack = Attack.RightPunch;
+                        _currentAttack = Attack.NormalPunch;
                     }
                 }
             }
