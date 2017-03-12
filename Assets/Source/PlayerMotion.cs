@@ -19,6 +19,8 @@ public class PlayerMotion : CharacterMotion
     private float _jumpStart;
 
     private Attack _currentAttack;
+
+    private bool _blocking;
     
     protected override void Start ()
     {
@@ -28,6 +30,7 @@ public class PlayerMotion : CharacterMotion
         _jumpStart = 0;
 
         _currentAttack = Attack.None;
+        _blocking = false;
     }
 
     protected override void FixedUpdate ()
@@ -78,7 +81,7 @@ public class PlayerMotion : CharacterMotion
 
     public void AttemptRangedAttack()
     {
-        if (_jumpState == JumpState.Grounded)
+        if (_jumpState == JumpState.Grounded && !_blocking)
         {
             if (_currentAttack == Attack.None)
             {
@@ -96,6 +99,16 @@ public class PlayerMotion : CharacterMotion
         }
 
         _animator.SetInteger("attackType", (int)_currentAttack);
+    }
+
+    public void ToggleBlock(bool blocking)
+    {
+        if (_jumpState == JumpState.Grounded && _currentAttack == Attack.None)
+        {
+            _haltMotion = blocking;
+            _blocking = blocking;
+            _animator.SetBool("blocking", blocking);
+        }
     }
 
     private void Jump()
