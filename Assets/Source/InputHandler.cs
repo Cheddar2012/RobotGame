@@ -5,8 +5,9 @@ public class InputHandler : MonoBehaviour
     private const string _playerObjectTag = "Player";
     private const string _movementAxis = "Horizontal";
     private const string _jumpButton = "Jump";
-    private const string _attackButton = "Fire1";
-
+    private const string _attackButton = "Attack1";
+    private const string _rangedAttackButton = "Attack2";
+    
     private PlayerMotion _playerMotion;
 
 	void Start()
@@ -38,6 +39,11 @@ public class InputHandler : MonoBehaviour
         if (Input.GetButtonDown(_attackButton))
         {
             _playerMotion.AttemptAttack();
+        }
+
+        if (Input.GetButtonDown(_rangedAttackButton))
+        {
+            _playerMotion.AttemptRangedAttack();
         }
     }
 }

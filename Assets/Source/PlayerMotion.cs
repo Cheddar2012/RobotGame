@@ -13,7 +13,8 @@ public class PlayerMotion : CharacterMotion
 
     // Allow player to begin next attack once their current attack is partway through
     private const float _earliestAttackFollowUp = 0.5F;
-    
+    private const float _earliestRangedAttackFollowUp = 0.6F;
+
     private JumpState _jumpState;
     private float _jumpStart;
 
@@ -50,32 +51,51 @@ public class PlayerMotion : CharacterMotion
     {
         if (_jumpState == JumpState.Grounded)
         {
-            if (_currentAttack > Attack.None)
-            {
-                if (_currentAttack != Attack.RocketPunch)
-                {
-                    float currentAnimationCompletion = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                    if (currentAnimationCompletion >= _earliestAttackFollowUp)
-                    {
-                        if (_currentAttack == Attack.RightPunch)
-                        {
-                            _currentAttack = Attack.LeftPunch;
-                        }
-                        else if (_currentAttack == Attack.LeftPunch)
-                        {
-                            _currentAttack = Attack.RightPunch;
-                        }
-                    }
-                }
-            }
-            else
+            if (_currentAttack == Attack.None)
             {
                 _haltMotion = true;
                 _currentAttack = Attack.RightPunch;
             }
+            else if (_currentAttack < Attack.RocketPunch)
+            {
+                float currentAnimationCompletion = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (currentAnimationCompletion >= _earliestAttackFollowUp)
+                {
+                    if (_currentAttack == Attack.RightPunch)
+                    {
+                        _currentAttack = Attack.LeftPunch;
+                    }
+                    else if (_currentAttack == Attack.LeftPunch)
+                    {
+                        _currentAttack = Attack.RightPunch;
+                    }
+                }
+            }
 
             _animator.SetInteger("attackType", (int)_currentAttack);
         }
+    }
+
+    public void AttemptRangedAttack()
+    {
+        if (_jumpState == JumpState.Grounded)
+        {
+            if (_currentAttack == Attack.None)
+            {
+                _haltMotion = true;
+                _currentAttack = Attack.RocketPunch;
+            }
+            else if (_currentAttack < Attack.RocketPunch)
+            {
+                float currentAnimationCompletion = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (currentAnimationCompletion >= _earliestRangedAttackFollowUp)
+                {
+                    _currentAttack = Attack.RocketPunch;
+                }
+            }
+        }
+
+        _animator.SetInteger("attackType", (int)_currentAttack);
     }
 
     private void Jump()
