@@ -123,4 +123,10 @@ public abstract class CharacterMotion : MonoBehaviour
     {
         _verticalMovement += (_gravity * Time.deltaTime);
     }
+
+    public virtual void Die()
+    {
+        _animator.SetBool("dead", true);
+        _haltMotion = true;
+    }
 }

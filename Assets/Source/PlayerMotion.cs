@@ -150,4 +150,15 @@ public class PlayerMotion : CharacterMotion
             }
         }
     }
+
+    public override void Die()
+    {
+        base.Die();
+        if (_jumpState == JumpState.PreJump)
+        {
+            _jumpState = JumpState.Grounded;
+        }
+
+        _blocking = false;
+    }
 }

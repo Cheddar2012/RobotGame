@@ -2,24 +2,17 @@
 
 public class InputHandler : MonoBehaviour
 {
-    private const string _playerObjectTag = "Player";
-    private const string _movementAxis = "Horizontal";
-    private const string _jumpButton = "Jump";
-    private const string _attackButton = "Attack1";
-    private const string _rangedAttackButton = "Attack2";
-    private const string _blockButton = "Block";
-
     private PlayerMotion _playerMotion;
 
 	void Start()
     {
-        _playerMotion = GameObject.FindGameObjectWithTag(_playerObjectTag).GetComponent<PlayerMotion>();
+        _playerMotion = GameManager.Instance.GetPlayer().GetComponent<PlayerMotion>();
 	}
 
     void Update()
     {
         // Handle horizontal movement
-        float movementDirection = Input.GetAxisRaw(_movementAxis);
+        float movementDirection = Input.GetAxisRaw(InputStrings.MovementAxis);
         if (movementDirection < 0)
         {
             _playerMotion.MoveLeft();
@@ -34,27 +27,27 @@ public class InputHandler : MonoBehaviour
         }
 
         // Handle jumping
-        if (Input.GetButtonDown(_jumpButton))
+        if (Input.GetButtonDown(InputStrings.JumpButton))
         {
             _playerMotion.AttemptJump();
         }
 
         // Handle attacking
-        if (Input.GetButtonDown(_attackButton))
+        if (Input.GetButtonDown(InputStrings.AttackButton))
         {
             _playerMotion.AttemptAttack();
         }
-        if (Input.GetButtonDown(_rangedAttackButton))
+        if (Input.GetButtonDown(InputStrings.RangedAttackButton))
         {
             _playerMotion.AttemptRangedAttack();
         }
 
         // Handle blocking
-        if (Input.GetButtonDown(_blockButton))
+        if (Input.GetButtonDown(InputStrings.BlockButton))
         {
             _playerMotion.ToggleBlock(true);
         }
-        else if (Input.GetButtonUp(_blockButton))
+        else if (Input.GetButtonUp(InputStrings.BlockButton))
         {
             _playerMotion.ToggleBlock(false);
         }
