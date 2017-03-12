@@ -4,13 +4,14 @@ public class InputHandler : MonoBehaviour
 {
     private const string _playerObjectTag = "Player";
     private const string _movementAxis = "Horizontal";
-    private const string _jumpAxis = "Jump";
+    private const string _jumpButton = "Jump";
+    private const string _attackButton = "Fire1";
 
-    private CharacterMotion _playerMotion;
+    private PlayerMotion _playerMotion;
 
 	void Start()
     {
-        _playerMotion = GameObject.FindGameObjectWithTag(_playerObjectTag).GetComponent<CharacterMotion>();
+        _playerMotion = GameObject.FindGameObjectWithTag(_playerObjectTag).GetComponent<PlayerMotion>();
 	}
 
     void Update()
@@ -29,9 +30,14 @@ public class InputHandler : MonoBehaviour
             _playerMotion.HorizontalMovementStopped();
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown(_jumpButton))
         {
             _playerMotion.AttemptJump();
+        }
+
+        if (Input.GetButtonDown(_attackButton))
+        {
+            _playerMotion.AttemptAttack();
         }
     }
 }
