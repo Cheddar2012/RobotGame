@@ -1,33 +1,21 @@
 ﻿using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IDestructibleObject
+public class PlayerHealth : CharacterHealth
 {
-    [SerializeField]
-    private int _hitPoints = 1;
-
     private PlayerMotion _playerMotion;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         _playerMotion = GameManager.Instance.GetPlayer().GetComponent<PlayerMotion>();
     }
 	
-	void Update ()
+	protected override void Update ()
     {
-	
-	}
-
-    void IDestructibleObject.TakeDamage(int damage)
-    {
-        _hitPoints -= damage;
-        if (_hitPoints <= 0)
-        {
-            IDestructibleObject obj = this;
-            obj.DestroyObject();
-        }
+        base.Update();
     }
 
-    void IDestructibleObject.DestroyObject()
+    protected override void OnCharacterDeath()
     {
         _playerMotion.Die();
     }
