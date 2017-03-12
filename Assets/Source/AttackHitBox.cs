@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class AttackHitBox : MonoBehaviour
 {
     [SerializeField]
     private int _attackPower = 1;
 
-    protected virtual void Start () { }
+    // The list of objects that have been hit by this attack
+    protected HashSet<Collider> _hitObjects;
+
+
+    protected virtual void Start ()
+    {
+        _hitObjects = new HashSet<Collider>();
+    }
 	
 	protected virtual void Update () { }
 
@@ -14,7 +22,11 @@ public class AttackHitBox : MonoBehaviour
         IDestructibleObject target = other.GetComponent<IDestructibleObject>();
         if (target != null)
         {
-            DealDamage(target);
+            // If the collider is not already in the HashSet, it has not yet been hit during this attack, so proceed with dealing damage
+            if (_hitObjects.Add(other))
+            {
+                DealDamage(target);
+            }
         }
     }
 

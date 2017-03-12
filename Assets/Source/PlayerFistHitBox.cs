@@ -9,14 +9,10 @@ public class PlayerFistHitBox : AttackHitBox
 
     private PlayerMotion _motion;
 
-    // The list of objects that have been hit by this attack
-    private HashSet<Collider> _hitObjects;
-
     protected override void Start()
     {
         base.Start();
         _motion = GameManager.Instance.GetPlayer().GetComponent<PlayerMotion>();
-        _hitObjects = new HashSet<Collider>();
     }
 
     protected override void Update()
@@ -35,13 +31,10 @@ public class PlayerFistHitBox : AttackHitBox
 
     protected override void OnTriggerEnter(Collider other)
     {
+        // Only apply damage if the current attack matches with the attack type of this hit box
         if (_motion.CurrentAttack == _attackType)
         {
-            // If the collider is not already in the HashSet, it has not yet been hit during this attack, so proceed with dealing damage
-            if (_hitObjects.Add(other))
-            {
-                base.OnTriggerEnter(other);
-            }
+            base.OnTriggerEnter(other);
         }
     }
 }
