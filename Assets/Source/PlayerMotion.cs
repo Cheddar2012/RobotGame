@@ -11,6 +11,11 @@ public class PlayerMotion : CharacterMotion
 
     private const float _jumpSpeed = 0.3F;
 
+    [SerializeField]
+    private AudioSource _normalPunchAudio;
+    [SerializeField]
+    private AudioSource _secondaryPunchAudio;
+
     // Allow player to begin next attack once their current attack is partway through
     private const float _earliestAttackFollowUp = 0.5F;
     private const float _earliestRangedAttackFollowUp = 0.6F;
@@ -72,6 +77,7 @@ public class PlayerMotion : CharacterMotion
             {
                 _haltMotion = true;
                 _currentAttack = Attack.NormalPunch;
+                _normalPunchAudio.Play();
             }
             else if (_currentAttack < Attack.RocketPunch)
             {
@@ -81,10 +87,12 @@ public class PlayerMotion : CharacterMotion
                     if (_currentAttack == Attack.NormalPunch)
                     {
                         _currentAttack = Attack.SecondaryPunch;
+                        _normalPunchAudio.Play();
                     }
                     else if (_currentAttack == Attack.SecondaryPunch)
                     {
                         _currentAttack = Attack.NormalPunch;
+                        _secondaryPunchAudio.Play();
                     }
                 }
             }
@@ -101,6 +109,7 @@ public class PlayerMotion : CharacterMotion
             {
                 _haltMotion = true;
                 _currentAttack = Attack.RocketPunch;
+                _normalPunchAudio.Play();
                 Invoke("FireRangedAttack", _missileDelay);
             }
             else if (_currentAttack < Attack.RocketPunch)
@@ -109,6 +118,7 @@ public class PlayerMotion : CharacterMotion
                 if (currentAnimationCompletion >= _earliestRangedAttackFollowUp)
                 {
                     _currentAttack = Attack.RocketPunch;
+                    _normalPunchAudio.Play();
                     Invoke("FireRangedAttack", _missileDelay);
                 }
             }
@@ -120,7 +130,7 @@ public class PlayerMotion : CharacterMotion
     public void FireRangedAttack()
     {
         GameObject missile = Instantiate<GameObject>(_missile);
-        missile.transform.position = _missileSpawn.position;
+        missile.transform.position = new Vector3(_missileSpawn.position.x, _missileSpawn.position.y, 0);
         if (transform.eulerAngles.y > 180)
         {
             missile.transform.forward = Vector3.left;
