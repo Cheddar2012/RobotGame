@@ -19,13 +19,16 @@ public class AttackHitBox : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        IDestructibleObject target = other.GetComponent<IDestructibleObject>();
-        if (target != null)
+        if (other.tag != "Pickup")
         {
-            // If the collider is not already in the HashSet, it has not yet been hit during this attack, so proceed with dealing damage
-            if (_hitObjects.Add(other))
+            IDestructibleObject target = other.GetComponent<IDestructibleObject>();
+            if (target != null)
             {
-                DealDamage(target);
+                // If the collider is not already in the HashSet, it has not yet been hit during this attack, so proceed with dealing damage
+                if (_hitObjects.Add(other))
+                {
+                    DealDamage(target);
+                }
             }
         }
     }

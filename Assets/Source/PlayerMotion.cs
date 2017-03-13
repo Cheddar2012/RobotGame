@@ -103,6 +103,12 @@ public class PlayerMotion : CharacterMotion
 
     public void AttemptRangedAttack()
     {
+        PlayerInventory playerInventory = GetComponent<PlayerInventory>();
+        if (playerInventory.MissileCount == 0)
+        {
+            return;
+        }
+
         if (_jumpState == JumpState.Grounded && !_blocking)
         {
             if (_currentAttack == Attack.None)
@@ -111,6 +117,7 @@ public class PlayerMotion : CharacterMotion
                 _currentAttack = Attack.RocketPunch;
                 _normalPunchAudio.Play();
                 Invoke("FireRangedAttack", _missileDelay);
+                --playerInventory.MissileCount;
             }
             else if (_currentAttack < Attack.RocketPunch)
             {
@@ -120,6 +127,7 @@ public class PlayerMotion : CharacterMotion
                     _currentAttack = Attack.RocketPunch;
                     _normalPunchAudio.Play();
                     Invoke("FireRangedAttack", _missileDelay);
+                    --playerInventory.MissileCount;
                 }
             }
         }

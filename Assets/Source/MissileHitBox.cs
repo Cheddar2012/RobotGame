@@ -45,7 +45,10 @@ public class MissileHitBox : AttackHitBox, IExplodingObject
 
     protected override void OnTriggerEnter(Collider other)
     {
-        OnExplode();
+        if (other.tag != "Pickup")
+        {
+            OnExplode();
+        }
     }
 
     public void OnExplode()
