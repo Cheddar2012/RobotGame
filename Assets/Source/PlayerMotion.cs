@@ -15,6 +15,13 @@ public class PlayerMotion : CharacterMotion
     private const float _earliestAttackFollowUp = 0.5F;
     private const float _earliestRangedAttackFollowUp = 0.6F;
 
+    [SerializeField]
+    private GameObject _missile;
+    [SerializeField]
+    private Transform _missileSpawn;
+    [SerializeField]
+    private float _missileDelay = 1.2F;
+
     private JumpState _jumpState;
     private float _jumpStart;
 
@@ -94,6 +101,7 @@ public class PlayerMotion : CharacterMotion
             {
                 _haltMotion = true;
                 _currentAttack = Attack.RocketPunch;
+                Invoke("FireRangedAttack", _missileDelay);
             }
             else if (_currentAttack < Attack.RocketPunch)
             {
@@ -101,11 +109,19 @@ public class PlayerMotion : CharacterMotion
                 if (currentAnimationCompletion >= _earliestRangedAttackFollowUp)
                 {
                     _currentAttack = Attack.RocketPunch;
+                    Invoke("FireRangedAttack", _missileDelay);
                 }
             }
         }
 
         _animator.SetInteger("attackType", (int)_currentAttack);
+    }
+
+    public void FireRangedAttack()
+    {
+        GameObject missile = Instantiate<GameObject>(_missile);
+        missile.transform.position = _missileSpawn.position;
+        missile.transform.forward = Vector3.right;
     }
 
     public void ToggleBlock(bool blocking)

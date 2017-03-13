@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class GameManager {
-
+public class GameManager
+{
     private const string _playerObjectTag = "Player";
 
     private static GameManager _instance;
