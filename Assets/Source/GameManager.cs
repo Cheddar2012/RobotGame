@@ -25,4 +25,9 @@ public class GameManager {
     {
         return GameObject.FindGameObjectWithTag(_playerObjectTag);
     }
+
+    public bool CanControlPlayerCharacter()
+    {
+        return !GetPlayer().GetComponent<PlayerHealth>().IsDead();
+    }
 }

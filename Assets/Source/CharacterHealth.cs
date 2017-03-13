@@ -24,4 +24,9 @@ public abstract class CharacterHealth : MonoBehaviour, IDestructibleObject
     }
 
     protected abstract void OnCharacterDeath();
+    
+    public bool IsDead()
+    {
+        return _hitPoints <= 0;
+    }
 }

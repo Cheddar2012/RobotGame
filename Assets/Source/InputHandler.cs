@@ -11,6 +11,11 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.CanControlPlayerCharacter())
+        {
+            return;
+        }
+
         // Handle horizontal movement
         float movementDirection = Input.GetAxisRaw(InputStrings.MovementAxis);
         if (movementDirection < 0)
