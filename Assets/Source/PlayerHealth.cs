@@ -22,6 +22,7 @@ public class PlayerHealth : CharacterHealth, IExplodingObject
     {
         _playerMotion.Die();
         OnExplode();
+        GameManager.Instance.GetUI().ShowDeathMessage();
     }
 
     public void OnExplode()

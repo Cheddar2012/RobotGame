@@ -7,7 +7,7 @@ public class EnemyHealth : CharacterHealth, IExplodingObject
 
     protected override void Start()
     {
-        
+        ++GameManager.Instance.Objectives;
     }
 
     protected override void Update()
@@ -19,6 +19,7 @@ public class EnemyHealth : CharacterHealth, IExplodingObject
     {
         OnExplode();
         Destroy(gameObject);
+        --GameManager.Instance.Objectives;
     }
 
     public void OnExplode()
