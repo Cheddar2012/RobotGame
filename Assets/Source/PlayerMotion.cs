@@ -121,7 +121,15 @@ public class PlayerMotion : CharacterMotion
     {
         GameObject missile = Instantiate<GameObject>(_missile);
         missile.transform.position = _missileSpawn.position;
-        missile.transform.forward = Vector3.right;
+        if (transform.eulerAngles.y > 180)
+        {
+            missile.transform.forward = Vector3.left;
+        }
+        else
+        {
+            missile.transform.forward = Vector3.right;
+        }
+        
     }
 
     public void ToggleBlock(bool blocking)
