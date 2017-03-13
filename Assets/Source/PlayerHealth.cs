@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
-public class PlayerHealth : CharacterHealth
+public class PlayerHealth : CharacterHealth, IExplodingObject
 {
     private PlayerMotion _playerMotion;
+
+    [SerializeField]
+    private GameObject _explosionParticles;
 
     protected override void Start()
     {
@@ -18,5 +21,12 @@ public class PlayerHealth : CharacterHealth
     protected override void OnCharacterDeath()
     {
         _playerMotion.Die();
+        OnExplode();
+    }
+
+    public void OnExplode()
+    {
+        GameObject explosion = Instantiate<GameObject>(_explosionParticles);
+        explosion.transform.position = transform.position;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MissileHitBox : AttackHitBox, IExplodingObject
 {
@@ -27,7 +26,7 @@ public class MissileHitBox : AttackHitBox, IExplodingObject
         base.Start();
         _currentSpeed = _startSpeed;
         _elapsedTime = 0;
-        Invoke("OnExpire", _durationAlive);
+        Invoke("OnExplode", _durationAlive);
     }
 	
 	protected override void Update ()
@@ -44,20 +43,10 @@ public class MissileHitBox : AttackHitBox, IExplodingObject
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (!other.isTrigger)
-        {
-            IExplodingObject missile = this;
-            missile.OnExplode();
-        }
+        OnExplode();
     }
 
-    void OnExpire()
-    {
-        IExplodingObject missile = this;
-        missile.OnExplode();
-    }
-
-    void IExplodingObject.OnExplode()
+    public void OnExplode()
     {
         GameObject explosion = Instantiate<GameObject>(_explosionParticles);
         explosion.transform.position = transform.position;

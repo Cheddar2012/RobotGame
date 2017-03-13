@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
-public class EnemyHealth : CharacterHealth
+public class EnemyHealth : CharacterHealth, IExplodingObject
 {
+    [SerializeField]
+    private GameObject _explosionParticles;
+
     protected override void Start()
     {
         
@@ -16,6 +17,14 @@ public class EnemyHealth : CharacterHealth
 
     protected override void OnCharacterDeath()
     {
+        OnExplode();
+        Destroy(gameObject);
+    }
+
+    public void OnExplode()
+    {
+        GameObject explosion = Instantiate<GameObject>(_explosionParticles);
+        explosion.transform.position = transform.position;
         Destroy(gameObject);
     }
 }

@@ -14,12 +14,11 @@ public abstract class CharacterHealth : MonoBehaviour, IDestructibleObject
         _hitPoints -= damage;
         if (_hitPoints <= 0)
         {
-            IDestructibleObject obj = this;
-            obj.DestroyObject();
+            DestroyObject();
         }
     }
 
-    void IDestructibleObject.DestroyObject()
+    public void DestroyObject()
     {
         OnCharacterDeath();
     }
