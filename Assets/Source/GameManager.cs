@@ -61,6 +61,12 @@ public class GameManager
         return GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
+    public void OnPlayerDead()
+    {
+        GetPlayer().GetComponent<PlayerMotion>().Die();
+        GetUI().ShowDeathMessage();
+    }
+
     public bool CanControlPlayerCharacter()
     {
         return !GetPlayer().GetComponent<PlayerHealth>().IsDead();

@@ -2,15 +2,12 @@
 
 public class PlayerHealth : CharacterHealth, IExplodingObject
 {
-    private PlayerMotion _playerMotion;
-
     [SerializeField]
     private GameObject _explosionParticles;
 
     protected override void Start()
     {
         base.Start();
-        _playerMotion = GameManager.Instance.GetPlayer().GetComponent<PlayerMotion>();
     }
 	
 	protected override void Update ()
@@ -20,14 +17,13 @@ public class PlayerHealth : CharacterHealth, IExplodingObject
 
     protected override void OnCharacterDeath()
     {
-        _playerMotion.Die();
         OnExplode();
-        GameManager.Instance.GetUI().ShowDeathMessage();
+        GameManager.Instance.OnPlayerDead();
     }
 
     public void OnExplode()
     {
-        GameObject explosion = Instantiate<GameObject>(_explosionParticles);
+        GameObject explosion = Instantiate(_explosionParticles);
         explosion.transform.position = transform.position;
     }
 }

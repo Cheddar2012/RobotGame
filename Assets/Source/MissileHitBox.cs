@@ -20,12 +20,14 @@ public class MissileHitBox : AttackHitBox, IExplodingObject
     [SerializeField]
     private GameObject _explosionParticles;
 
+    private bool _exploded;
 
 	protected override void Start ()
     {
         base.Start();
         _currentSpeed = _startSpeed;
         _elapsedTime = 0;
+        _exploded = false;
         Invoke("OnExplode", _durationAlive);
     }
 	
@@ -48,8 +50,13 @@ public class MissileHitBox : AttackHitBox, IExplodingObject
 
     public void OnExplode()
     {
-        GameObject explosion = Instantiate<GameObject>(_explosionParticles);
-        explosion.transform.position = transform.position;
-        Destroy(gameObject);
+        if (!_exploded)
+        {
+            _exploded = true;
+
+            GameObject explosion = Instantiate<GameObject>(_explosionParticles);
+            explosion.transform.position = transform.position;
+            Destroy(gameObject);
+        }
     }
 }

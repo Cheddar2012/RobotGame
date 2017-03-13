@@ -9,7 +9,7 @@ public abstract class CharacterHealth : MonoBehaviour, IDestructibleObject
 
     protected virtual void Update() { }
 
-    void IDestructibleObject.TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _hitPoints -= damage;
         if (_hitPoints <= 0)
