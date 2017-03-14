@@ -18,6 +18,7 @@ public class PlayerInventory : MonoBehaviour
                 GetComponent<AudioSource>().Play();
             }
             _missileCount = Mathf.Max(0, value);
+            GameManager.Instance.GetUI().RocketsCount = _missileCount;
         }
     }
 

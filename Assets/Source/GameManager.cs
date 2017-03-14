@@ -23,7 +23,9 @@ public class GameManager
             {
                 _objectivesToComplete = value;
             }
-            
+
+            GetUI().EnemiesCount = _objectivesToComplete;
+
             if (_objectivesToComplete == 0)
             {
                 OnObjectivesComplete();

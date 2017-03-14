@@ -5,6 +5,35 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _titleOrReplayScreen;
+    [SerializeField]
+    private Text _hitPointsCount;
+    public int HitPointsCount
+    {
+        set
+        {
+            _hitPointsCount.text = value.ToString();
+        }
+    }
+
+    [SerializeField]
+    private Text _rocketsCount;
+    public int RocketsCount
+    {
+        set
+        {
+            _rocketsCount.text = value.ToString();
+        }
+    }
+
+    [SerializeField]
+    private Text _enemiesCount;
+    public int EnemiesCount
+    {
+        set
+        {
+            _enemiesCount.text = value.ToString();
+        }
+    }
 
     private void Start() { }
 

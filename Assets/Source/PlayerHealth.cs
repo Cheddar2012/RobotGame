@@ -8,11 +8,18 @@ public class PlayerHealth : CharacterHealth, IExplodingObject
     protected override void Start()
     {
         base.Start();
+        GameManager.Instance.GetUI().HitPointsCount = _hitPoints;
     }
 	
 	protected override void Update ()
     {
         base.Update();
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        GameManager.Instance.GetUI().HitPointsCount = _hitPoints;
     }
 
     protected override void OnCharacterDeath()
