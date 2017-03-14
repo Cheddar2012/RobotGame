@@ -23,8 +23,8 @@ public class GameManager
             {
                 _objectivesToComplete = value;
             }
-
-            GetUI().EnemiesCount = _objectivesToComplete;
+            
+            GetUI().EnemiesCount = Mathf.Max(_objectivesToComplete, 0);
 
             if (_objectivesToComplete == 0)
             {

@@ -10,6 +10,7 @@ public class ButtonActions : MonoBehaviour
 
     public void LoadGameScene()
     {
+        GameManager.Instance.Objectives = -1;
         SceneManager.LoadScene(1);
     }
 }

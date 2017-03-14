@@ -5,10 +5,20 @@ public class PlayerHealth : CharacterHealth, IExplodingObject
     [SerializeField]
     private GameObject _explosionParticles;
 
+    private bool _blocking;
+    public bool Blocking
+    {
+        set
+        {
+            _blocking = value;
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
         GameManager.Instance.GetUI().HitPointsCount = _hitPoints;
+        _blocking = false;
     }
 	
 	protected override void Update ()
@@ -18,6 +28,10 @@ public class PlayerHealth : CharacterHealth, IExplodingObject
 
     public override void TakeDamage(int damage)
     {
+        if (_blocking)
+        {
+            --damage;
+        }
         base.TakeDamage(damage);
         GameManager.Instance.GetUI().HitPointsCount = _hitPoints;
     }

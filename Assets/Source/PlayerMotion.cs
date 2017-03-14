@@ -157,6 +157,7 @@ public class PlayerMotion : CharacterMotion
             _haltMotion = blocking;
             _blocking = blocking;
             _animator.SetBool("blocking", blocking);
+            GetComponent<PlayerHealth>().Blocking = blocking;
         }
     }
 
